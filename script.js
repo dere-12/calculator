@@ -87,3 +87,35 @@ function addEvLi(operand) {
 }
 
 addEvLi(handleNum1);
+
+const equalSign = document.querySelector(".btn.span-y");
+equalSign.addEventListener("click", () => {
+  num1 = parseInt(num1.join(""));
+  num2 = parseInt(num2.join(""));
+  let result;
+
+  switch (operator) {
+    case "+":
+      result = operate(num1, num2, add).toString();
+      populate(result);
+      break;
+    case "-":
+      result = operate(num1, num2, subtract).toString();
+      populate(result);
+      break;
+    case "*":
+      result = operate(num1, num2, multiply).toString();
+      populate(result);
+      break;
+    case "/":
+      result = operate(num1, num2, divide).toString();
+      populate(result);
+      break;
+  }
+  console.log(`
+      num1 = ${num1}
+      num2 = ${num2}
+      operator = ${operator}
+      result = ${result}
+    `);
+});
