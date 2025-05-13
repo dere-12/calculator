@@ -11,7 +11,13 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-  return num1 / num2;
+  if (num2 === 0) {
+    return displayErrorMessage();
+  } else if (num1 % num2 === 0) {
+    return num1 / num2;
+  } else {
+    return Math.round(num1 / num2).toFixed(6);
+  }
 }
 
 function operate(operandA, operandB, operator) {
@@ -20,6 +26,11 @@ function operate(operandA, operandB, operator) {
 
 function populate(target) {
   display.textContent = typeof target === "string" ? target : target.join("");
+}
+
+function displayErrorMessage() {
+  display.textContent = "Oops, Cannot divide by zero.";
+  display.classList.add("error-message");
 }
 
 const display = document.querySelector(".display");

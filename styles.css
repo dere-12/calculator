@@ -77,3 +77,9 @@ button:hover {
 .operators button {
   background-color: orange;
 }
+
+.error-message {
+  background-color: #ee8c8c;
+  color: #ff0000;
+  padding: 24px;
+}
