@@ -142,5 +142,23 @@ function calculate() {
     `);
 }
 
+const digits = document.querySelectorAll(".digit");
 const equalSign = document.querySelector(".btn.span-y");
-equalSign.addEventListener("click", calculate);
+equalSign.addEventListener("click", () => {
+  if (num1.length !== 0 && num2.length !== 0 && operator !== undefined) {
+    calculate();
+  } else {
+    alert("Please try again by providing all necessary inputs.");
+    location.reload();
+  }
+
+  digits.forEach((digit) => {
+    digit.addEventListener("click", () => {
+      location.reload();
+    });
+  });
+});
+
+document.querySelector(".btn.clear").addEventListener("click", () => {
+  location.reload();
+});
