@@ -70,9 +70,17 @@ function handleOperator(event) {
 
 function handleNum2(event) {
   const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9";
+  const operators = "+, -, *, /";
   if (numbers.includes(event.target.textContent)) {
     num2.push(event.target.textContent);
     populate(num2);
+  } else if (operators.includes(event.target.textContent)) {
+    calculate();
+    operator = event.target.textContent;
+    buttons.forEach((button) => {
+      button.removeEventListener("click", handleNum2);
+    });
+    addEvLi(handleOperator);
   } else {
     buttons.forEach((button) => {
       button.removeEventListener("click", handleNum2);
@@ -88,8 +96,7 @@ function addEvLi(operand) {
 
 addEvLi(handleNum1);
 
-const equalSign = document.querySelector(".btn.span-y");
-equalSign.addEventListener("click", () => {
+function calculate() {
   num1 = parseInt(num1.join(""));
   num2 = parseInt(num2.join(""));
   let result;
@@ -112,10 +119,17 @@ equalSign.addEventListener("click", () => {
       populate(result);
       break;
   }
+
+  num1 = [];
+  num2 = [];
+  num1.push(result);
   console.log(`
       num1 = ${num1}
       num2 = ${num2}
       operator = ${operator}
       result = ${result}
     `);
-});
+}
+
+const equalSign = document.querySelector(".btn.span-y");
+equalSign.addEventListener("click", calculate);
