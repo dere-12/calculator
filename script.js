@@ -1,22 +1,20 @@
 function add(num1, num2) {
-  return num1 + num2;
+  return Math.round((num1 + num2) * 1000000) / 1000000;
 }
 
 function subtract(num1, num2) {
-  return num1 - num2;
+  return Math.round((num1 - num2) * 1000000) / 1000000;
 }
 
 function multiply(num1, num2) {
-  return num1 * num2;
+  return Math.round(num1 * num2 * 1000000) / 1000000;
 }
 
 function divide(num1, num2) {
   if (num2 === 0) {
     return displayErrorMessage();
-  } else if (num1 % num2 === 0) {
-    return num1 / num2;
   } else {
-    return Math.round(num1 / num2).toFixed(6);
+    return Math.round((num1 / num2) * 1000000) / 1000000;
   }
 }
 
@@ -40,10 +38,16 @@ let num2 = [];
 let operator;
 
 function handleNum1(event) {
-  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9";
+  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, .";
   const operators = "+, -, *, /";
   if (numbers.includes(event.target.textContent)) {
-    num1.push(event.target.textContent);
+    if (!num1.includes(".") && event.target.textContent === ".") {
+      num1.push(event.target.textContent);
+    } else if (!num1.includes(".") && event.target.textContent !== ".") {
+      num1.push(event.target.textContent);
+    } else if (num1.includes(".") && event.target.textContent !== ".") {
+      num1.push(event.target.textContent);
+    }
     populate(num1);
   } else if (operators.includes(event.target.textContent)) {
     operator = event.target.textContent;
@@ -61,7 +65,7 @@ function handleNum1(event) {
 
 function handleOperator(event) {
   const operators = "+, -, *, /";
-  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9";
+  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, .";
   if (operators.includes(event.target.textContent)) {
     operator = event.target.textContent;
     populate(operator);
@@ -80,10 +84,16 @@ function handleOperator(event) {
 }
 
 function handleNum2(event) {
-  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9";
+  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, .";
   const operators = "+, -, *, /";
   if (numbers.includes(event.target.textContent)) {
-    num2.push(event.target.textContent);
+    if (!num2.includes(".") && event.target.textContent === ".") {
+      num2.push(event.target.textContent);
+    } else if (!num2.includes(".") && event.target.textContent !== ".") {
+      num2.push(event.target.textContent);
+    } else if (num2.includes(".") && event.target.textContent !== ".") {
+      num2.push(event.target.textContent);
+    }
     populate(num2);
   } else if (operators.includes(event.target.textContent)) {
     calculate();
@@ -108,8 +118,13 @@ function addEvLi(operand) {
 addEvLi(handleNum1);
 
 function calculate() {
-  num1 = parseInt(num1.join(""));
-  num2 = parseInt(num2.join(""));
+  // if (num1.includes('.'))
+  num1 = num1.join("");
+  num2 = num2.join("");
+
+  num1 = num1.includes(".") ? parseFloat(num1) : parseInt(num1);
+  num2 = num2.includes(".") ? parseFloat(num2) : parseInt(num2);
+
   let result;
 
   switch (operator) {
