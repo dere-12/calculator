@@ -38,19 +38,22 @@ let num2 = [];
 let operator;
 
 function handleNum1(event) {
-  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, .";
+  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ., 'Undo'";
   const operators = "+, -, *, /";
-  if (numbers.includes(event.target.textContent)) {
-    if (!num1.includes(".") && event.target.textContent === ".") {
-      num1.push(event.target.textContent);
-    } else if (!num1.includes(".") && event.target.textContent !== ".") {
-      num1.push(event.target.textContent);
-    } else if (num1.includes(".") && event.target.textContent !== ".") {
-      num1.push(event.target.textContent);
+  const content = event.target.textContent;
+  if (numbers.includes(content)) {
+    if (!num1.includes(".") && content === "." && content !== "Undo") {
+      num1.push(content);
+    } else if (!num1.includes(".") && content !== "." && content !== "Undo") {
+      num1.push(content);
+    } else if (num1.includes(".") && content !== "." && content !== "Undo") {
+      num1.push(content);
+    } else if (content === "Undo" && num1.length > 0) {
+      num1.pop();
     }
     populate(num1);
-  } else if (operators.includes(event.target.textContent)) {
-    operator = event.target.textContent;
+  } else if (operators.includes(content)) {
+    operator = content;
     populate(operator);
     buttons.forEach((button) => {
       button.removeEventListener("click", handleNum1);
@@ -66,11 +69,12 @@ function handleNum1(event) {
 function handleOperator(event) {
   const operators = "+, -, *, /";
   const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, .";
-  if (operators.includes(event.target.textContent)) {
-    operator = event.target.textContent;
+  const content = event.target.textContent;
+  if (operators.includes(content)) {
+    operator = content;
     populate(operator);
-  } else if (numbers.includes(event.target.textContent)) {
-    num2.push(event.target.textContent);
+  } else if (numbers.includes(content)) {
+    num2.push(content);
     populate(num2);
     buttons.forEach((button) => {
       button.removeEventListener("click", handleOperator);
@@ -84,20 +88,23 @@ function handleOperator(event) {
 }
 
 function handleNum2(event) {
-  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, .";
+  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ., 'Undo'";
   const operators = "+, -, *, /";
-  if (numbers.includes(event.target.textContent)) {
-    if (!num2.includes(".") && event.target.textContent === ".") {
-      num2.push(event.target.textContent);
-    } else if (!num2.includes(".") && event.target.textContent !== ".") {
-      num2.push(event.target.textContent);
-    } else if (num2.includes(".") && event.target.textContent !== ".") {
-      num2.push(event.target.textContent);
+  const content = event.target.textContent;
+  if (numbers.includes(content)) {
+    if (!num2.includes(".") && content === "." && content !== "Undo") {
+      num2.push(content);
+    } else if (!num2.includes(".") && content !== "." && content !== "Undo") {
+      num2.push(content);
+    } else if (num2.includes(".") && content !== "." && content !== "Undo") {
+      num2.push(content);
+    } else if (content === "Undo" && num2.length > 0) {
+      num2.pop();
     }
     populate(num2);
-  } else if (operators.includes(event.target.textContent)) {
+  } else if (operators.includes(content)) {
     calculate();
-    operator = event.target.textContent;
+    operator = content;
     buttons.forEach((button) => {
       button.removeEventListener("click", handleNum2);
     });
@@ -118,7 +125,6 @@ function addEvLi(operand) {
 addEvLi(handleNum1);
 
 function calculate() {
-  // if (num1.includes('.'))
   num1 = num1.join("");
   num2 = num2.join("");
 
