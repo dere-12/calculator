@@ -146,32 +146,24 @@ function calculate() {
 
   switch (operator) {
     case "+":
-      result = operate(num1, num2, add).toString();
-      populate(result);
+      result = operate(num1, num2, add);
       break;
     case "-":
-      result = operate(num1, num2, subtract).toString();
-      populate(result);
+      result = operate(num1, num2, subtract);
       break;
     case "*":
-      result = operate(num1, num2, multiply).toString();
-      populate(result);
+      result = operate(num1, num2, multiply);
       break;
     case "/":
-      result = operate(num1, num2, divide).toString();
-      populate(result);
+      result = operate(num1, num2, divide);
       break;
   }
 
-  num1 = [];
+  result = result.toString();
+  populate(result);
+
+  num1 = [result];
   num2 = [];
-  num1.push(result);
-  console.log(`
-      num1 = ${num1}
-      num2 = ${num2}
-      operator = ${operator}
-      result = ${result}
-    `);
 }
 
 function handleEqualSign(event) {
