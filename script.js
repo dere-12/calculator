@@ -38,17 +38,26 @@ let num2 = [];
 let operator;
 
 function handleNum1(event) {
-  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ., 'Undo'";
+  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, .";
+  const keys = "'Undo', 'Backspace'";
   const operators = "+, -, *, /";
-  const content = event.target.textContent;
-  if (numbers.includes(content)) {
-    if (!num1.includes(".") && content === "." && content !== "Undo") {
+  const content = event.type === "click" ? event.target.textContent : event.key;
+  if (numbers.includes(content) || keys.includes(content)) {
+    if (!num1.includes(".") && content === "." && !keys.includes(content)) {
       num1.push(content);
-    } else if (!num1.includes(".") && content !== "." && content !== "Undo") {
+    } else if (
+      !num1.includes(".") &&
+      content !== "." &&
+      !keys.includes(content)
+    ) {
       num1.push(content);
-    } else if (num1.includes(".") && content !== "." && content !== "Undo") {
+    } else if (
+      num1.includes(".") &&
+      content !== "." &&
+      !keys.includes(content)
+    ) {
       num1.push(content);
-    } else if (content === "Undo" && num1.length > 0) {
+    } else if (keys.includes(content)) {
       num1.pop();
     }
     populate(num1);
@@ -58,18 +67,15 @@ function handleNum1(event) {
     buttons.forEach((button) => {
       button.removeEventListener("click", handleNum1);
     });
+    document.removeEventListener("keydown", handleNum1);
     addEvLi(handleOperator);
-  } else {
-    buttons.forEach((button) => {
-      button.removeEventListener("click", handleNum1);
-    });
   }
 }
 
 function handleOperator(event) {
   const operators = "+, -, *, /";
   const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, .";
-  const content = event.target.textContent;
+  const content = event.type === "click" ? event.target.textContent : event.key;
   if (operators.includes(content)) {
     operator = content;
     populate(operator);
@@ -79,26 +85,32 @@ function handleOperator(event) {
     buttons.forEach((button) => {
       button.removeEventListener("click", handleOperator);
     });
+    document.removeEventListener("keydown", handleOperator);
     addEvLi(handleNum2);
-  } else {
-    buttons.forEach((button) => {
-      button.removeEventListener("click", handleOperator);
-    });
   }
 }
 
 function handleNum2(event) {
-  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ., 'Undo'";
+  const numbers = "0, 1, 2, 3, 4, 5, 6, 7, 8, 9, .";
+  const keys = "'Undo', 'Backspace'";
   const operators = "+, -, *, /";
-  const content = event.target.textContent;
-  if (numbers.includes(content)) {
-    if (!num2.includes(".") && content === "." && content !== "Undo") {
+  const content = event.type === "click" ? event.target.textContent : event.key;
+  if (numbers.includes(content) || keys.includes(content)) {
+    if (!num2.includes(".") && content === "." && !keys.includes(content)) {
       num2.push(content);
-    } else if (!num2.includes(".") && content !== "." && content !== "Undo") {
+    } else if (
+      !num2.includes(".") &&
+      content !== "." &&
+      !keys.includes(content)
+    ) {
       num2.push(content);
-    } else if (num2.includes(".") && content !== "." && content !== "Undo") {
+    } else if (
+      num2.includes(".") &&
+      content !== "." &&
+      !keys.includes(content)
+    ) {
       num2.push(content);
-    } else if (content === "Undo" && num2.length > 0) {
+    } else if (keys.includes(content)) {
       num2.pop();
     }
     populate(num2);
@@ -108,11 +120,8 @@ function handleNum2(event) {
     buttons.forEach((button) => {
       button.removeEventListener("click", handleNum2);
     });
+    document.removeEventListener("keydown", handleNum2);
     addEvLi(handleOperator);
-  } else {
-    buttons.forEach((button) => {
-      button.removeEventListener("click", handleNum2);
-    });
   }
 }
 
@@ -120,6 +129,8 @@ function addEvLi(operand) {
   buttons.forEach((button) => {
     button.addEventListener("click", operand);
   });
+
+  document.addEventListener("keydown", operand);
 }
 
 addEvLi(handleNum1);
@@ -163,22 +174,32 @@ function calculate() {
     `);
 }
 
+function handleEqualSign(event) {
+  const content = event.target.textContent;
+  const keyType = event.key;
+  if (content === "=" || keyType === "Enter") {
+    if (num1.length !== 0 && num2.length !== 0 && operator !== undefined) {
+      calculate();
+    } else {
+      alert("Please try again by providing all necessary inputs.");
+      location.reload();
+    }
+
+    digits.forEach((digit) => {
+      digit.addEventListener("click", () => {
+        location.reload();
+      });
+      document.addEventListener("keydown", () => {
+        location.reload();
+      });
+    });
+  }
+}
+
 const digits = document.querySelectorAll(".digit");
 const equalSign = document.querySelector(".btn.span-y");
-equalSign.addEventListener("click", () => {
-  if (num1.length !== 0 && num2.length !== 0 && operator !== undefined) {
-    calculate();
-  } else {
-    alert("Please try again by providing all necessary inputs.");
-    location.reload();
-  }
-
-  digits.forEach((digit) => {
-    digit.addEventListener("click", () => {
-      location.reload();
-    });
-  });
-});
+equalSign.addEventListener("click", handleEqualSign);
+document.addEventListener("keydown", handleEqualSign);
 
 document.querySelector(".btn.clear").addEventListener("click", () => {
   location.reload();
