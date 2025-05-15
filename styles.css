@@ -12,17 +12,22 @@ body {
 }
 
 .container {
-  width: 402px;
-  border: 1px solid #1ef329;
+  width: 380px;
+  background-color: #11161b;
+  border-radius: 18px;
+  margin-top: 40px;
 }
 
 .board-container {
+  width: 360px;
   display: flex;
   flex-wrap: wrap;
+  gap: 8px;
+  padding-left: 16px;
 }
 
 .display {
-  max-width: 400px;
+  max-width: 340px;
   height: 130px;
   display: flex;
   justify-content: end;
@@ -30,53 +35,65 @@ body {
   flex-wrap: wrap;
   font-size: 42px;
   color: #ffffff;
-  padding-right: 10px;
+  margin-bottom: 8px;
+  margin-left: 10px;
 }
 
 .btn {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
 }
 
 .span-x {
-  width: 200px;
+  width: 168px;
 }
 
 .w-tr {
   display: flex;
-  margin-top: -100px;
+  margin-top: -85px;
+  gap: 8px;
 }
 
 button {
   width: 100%;
   height: 100%;
   font-size: 24px;
+  font-weight: 900;
   font-family: monospace;
-  background-color: #bebcbc;
-  color: #090335;
-  border: 1px solid #454755;
-  border-radius: 4px;
+  border-radius: 8px;
   outline: none;
 }
 
+.digit button {
+  background-color: #303136;
+  color: #29a8ff;
+}
+
+.operators button {
+  background-color: #005db2;
+  color: #a4d9ff;
+}
+
+.clear button {
+  background-color: #f74848;
+  color: #002b53;
+}
+
+.undo button {
+  background-color: #797a7a;
+  color: #002b53;
+}
+
 button:hover {
-  opacity: 0.8;
+  opacity: 0.5;
 }
 
 .span-y {
-  height: 200px;
+  height: 160px;
 }
 
 .span-y button {
   background-color: rgb(0, 153, 0);
-}
-
-.clear button {
-  background-color: rgb(250, 55, 55);
-}
-
-.operators button {
-  background-color: orange;
 }
 
 .error-message {

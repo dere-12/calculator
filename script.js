@@ -19,7 +19,7 @@ function divide(num1, num2) {
 }
 
 function operate(operandA, operandB, operator) {
-  return operator(operandA, operandB); // if not return, the value will be undefined.
+  return operator(operandA, operandB);
 }
 
 function populate(target) {
@@ -181,22 +181,24 @@ function handleEqualSign(event) {
     if (num1.length !== 0 && num2.length !== 0 && operator !== undefined) {
       calculate();
     } else {
-      alert("Please try again by providing all necessary inputs.");
+      alert("Please provide all necessary inputs.");
       location.reload();
     }
 
-    digits.forEach((digit) => {
-      digit.addEventListener("click", () => {
+    document.addEventListener("click", (event) => {
+      if (event.target.textContent !== "=") {
         location.reload();
-      });
-      document.addEventListener("keydown", () => {
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter") {
         location.reload();
-      });
+      }
     });
   }
 }
 
-const digits = document.querySelectorAll(".digit");
 const equalSign = document.querySelector(".btn.span-y");
 equalSign.addEventListener("click", handleEqualSign);
 document.addEventListener("keydown", handleEqualSign);
